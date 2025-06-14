@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mnemonic Design with GenAI - Large Poster</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .poster {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .ai-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+        }
+        
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        .authors {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+        
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 5px solid #3b82f6;
+        }
+        
+        .section.problem {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .section.solution {
+            border-left-color: #22c55e;
+            background: #f0fdf4;
+        }
+        
+        .section.method {
+            border-left-color: #8b5cf6;
+            background: #faf5ff;
+        }
+        
+        .section.examples {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+        
+        .section.results {
+            border-left-color: #06b6d4;
+            background: #ecfeff;
+        }
+        
+        .section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+            color: #374151;
+        }
+        
+        .section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+        
+        .section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .section li {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #374151;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .section li::before {
+            content: "▸";
+            color: #3b82f6;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .encoding-flow {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .flow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .flow-arrow {
+            color: #3b82f6;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .example-box {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .example-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .number-display {
+            background: #1e293b;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .conversion-text {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .mnemonic-result {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #0ea5e9;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #0c4a6e;
+            text-align: center;
+        }
+        
+        .applications-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .app-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .app-item h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+        
+        .app-item p {
+            font-size: 13px;
+            color: #64748b;
+            margin: 0;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .benefit-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .benefit-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .benefit-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        
+        .benefit-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .lookup-table {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #e5e7eb;
+            overflow-x: auto;
+        }
+        
+        .lookup-table h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+        
+        .table-sample {
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            color: #374151;
+            line-height: 1.4;
+        }
+        
+        .footer {
+            background: #f8fafc;
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .footer h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .footer p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .applications-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <div class="header">
+            <div class="ai-badge">🤖 GenAI Powered</div>
+            <h1 class="title">Mnemonic Design with GenAI for Digital Security Management</h1>
+            <p class="subtitle">Visual mnemonics using generative AI to enhance memorization and recall of complex numeric codes</p>
+            <div class="authors">
+                <strong>Tojin T. Eapen¹, J. Scott Christianson², Kai Wang³, Petra Kugler⁴, Josh Folk⁵</strong><br>
+                ¹Center for Creative Foresight, ²University of Missouri, ³AI Ager, ⁴OST Eastern Switzerland, ⁵Independent Consultant
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-column">
+                <div class="section problem">
+                    <h2>🔒 The Problem</h2>
+                    <p>Modern digital security requires users to memorize increasingly complex numeric codes, creating a fundamental tension between security and usability.</p>
+                    <ul>
+                        <li>Complex codes are secure but difficult to remember</li>
+                        <li>Simple codes are memorable but vulnerable to attacks</li>
+                        <li>Memory failures can lead to permanent loss of digital assets</li>
+                        <li>Certain user groups (children, elderly, cognitively impaired) face additional challenges</li>
+                        <li>High-stress situations make recall even more difficult</li>
+                    </ul>
+                    <p><strong>Real Impact:</strong> Millions of dollars in cryptocurrency lost due to forgotten private keys, device lockouts from forgotten PINs, and security breaches from weak passwords.</p>
+                </div>
+                
+                <div class="section solution">
+                    <h2>💡 Our Solution</h2>
+                    <p>We introduce a systematic approach that leverages generative AI to create memorable visual mnemonics by blending familiar concepts.</p>
+                    <ul>
+                        <li>Maps numbers to objects, organisms, and occupations</li>
+                        <li>Creates composite images using conceptual blending</li>
+                        <li>Generates distinctive, memorable visual anchors</li>
+                        <li>Maintains security while improving memorability</li>
+                        <li>Accessible to diverse user groups and abilities</li>
+                    </ul>
+                    <p><strong>Key Innovation:</strong> Automated generation of evocative imagery using AI tools like DALL-E, combined with cognitive principles of bisociation and trisociation.</p>
+                </div>
+                
+                <div class="section results">
+                    <h2>📊 Key Benefits & Impact</h2>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🧠</div>
+                            <div class="benefit-title">Enhanced Memory</div>
+                            <div class="benefit-desc">Visual mnemonics leverage human spatial and visual memory systems</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🔒</div>
+                            <div class="benefit-title">Security Preserved</div>
+                            <div class="benefit-desc">Maintains cryptographic strength while improving usability</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">♿</div>
+                            <div class="benefit-title">Inclusive Design</div>
+                            <div class="benefit-desc">Supports users with cognitive challenges and memory impairments</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">⚡</div>
+                            <div class="benefit-title">High-Stress Resilience</div>
+                            <div class="benefit-desc">Visual cues remain accessible under pressure</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🎯</div>
+                            <div class="benefit-title">Scalable System</div>
+                            <div class="benefit-desc">Works from simple PINs to complex cryptocurrency keys</div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🤖</div>
+                            <div class="benefit-title">AI-Generated Quality</div>
+                            <div class="benefit-desc">Consistent, high-quality mnemonics at scale</div>
+                        </div>
+                    </div>
+                    
+                    <h3>Target User Groups</h3>
+                    <ul>
+                        <li>Children learning emergency numbers and basic security</li>
+                        <li>Older adults managing multiple digital accounts</li>
+                        <li>Users with memory-related challenges</li>
+                        <li>Professionals in high-stress environments</li>
+                        <li>Cryptocurrency users securing valuable digital assets</li>
+                        <li>Anyone seeking better password/PIN memorization</li>
+                    </ul>
+                    
+                    <h3>Technical Advantages</h3>
+                    <ul>
+                        <li>Base-256 encoding maximizes information density</li>
+                        <li>Predefined lookup tables ensure consistency</li>
+                        <li>Conceptual blending creates memorable "bizarre" imagery</li>
+                        <li>AI generation scales to any number length</li>
+                        <li>Compatible with existing security standards (BIP39)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="section examples">
+                    <h2>🎨 Examples in Action</h2>
+                    
+                    <div class="example-box">
+                        <div class="example-title">PIN Code Example (1427)</div>
+                        <div class="number-display">1427</div>
+                        <div class="conversion-text">Base-256: (5, 147) → Aloe + Guitar</div>
+                        <div style="text-align: center; margin: 15px 0;">
+                            <img src="aloe-guitar.jpeg" alt="Aloe Guitar Mnemonic" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="mnemonic-result">"Aloe-inspired Guitar"</div>
+                        <p style="font-size: 13px; color: #64748b; margin-top: 10px;">A bisociated image combining the natural patterns of aloe with guitar design</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Complex Number Example (12216814)</div>
+                        <div class="number-display">12216814</div>
+                        <div class="conversion-text">Base-256: (186, 105, 238) → Postman + Gazelle + Toy</div>
+                        <div style="text-align: center; margin: 15px 0;">
+                            <img src="postman-gazelle-toy.jpeg" alt="Postman with Gazelle Toy" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="mnemonic-result">"Postman with Gazelle-inspired Toy"</div>
+                        <p style="font-size: 13px; color: #64748b; margin-top: 10px;">A trisociated image blending occupation, organism, and object concepts</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Social Security Number (123-45-6789)</div>
+                        <div class="number-display">123-45-6789</div>
+                        <div class="conversion-text">Base-256: [(7,91), (125,21)] → [(Anemone, Chalkboard), (Iguana, Ball)]</div>
+                        <div style="text-align: center; margin: 15px 0;">
+                            <img src="ssn-mnemonic.jpg" alt="SSN Mnemonics" style="width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="mnemonic-result">Two memorable images: "Anemone Chalkboard" + "Iguana Ball"</div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Cryptocurrency Private Key (132-bit)</div>
+                        <div class="number-display">music rural under antique story diamond...</div>
+                        <div class="conversion-text">12-word BIP39 → Base-256 → 9 bisociated image pairs</div>
+                        <div style="text-align: center; margin: 15px 0;">
+                            <img src="bitcoin-mnemonic.jpeg" alt="Cryptocurrency Key Mnemonics Grid" style="width: 450px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="mnemonic-result">Nine memorable image pairs for complex private key storage</div>
+                        <p style="font-size: 13px; color: #64748b; margin-top: 10px;">Each image represents paired concepts, creating a visual story for the entire key</p>
+                    </div>
+                    
+                    <h3>Applications</h3>
+                    <div class="applications-grid">
+                        <div class="app-item">
+                            <h4>🏧 Banking PINs</h4>
+                            <p>4-digit codes → single bisociated image</p>
+                        </div>
+                        <div class="app-item">
+                            <h4>📱 Device Passcodes</h4>
+                            <p>6-digit codes → enhanced visual mnemonics</p>
+                        </div>
+                        <div class="app-item">
+                            <h4>🆘 Emergency Numbers</h4>
+                            <p>Critical contact information → memorable sequences</p>
+                        </div>
+                        <div class="app-item">
+                            <h4>₿ Cryptocurrency Keys</h4>
+                            <p>Private keys → series of mnemonic images</p>
+                        </div>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </div>
+        
+        <div class="footer">
+            <h3>Future Research Directions</h3>
+            <p>
+                <strong>User Studies:</strong> Controlled evaluation of recall performance across demographic groups and use cases • 
+                <strong>Longitudinal Assessment:</strong> Long-term memory durability and stress-environment performance • 
+                <strong>Cultural Adaptation:</strong> Culturally-specific object/organism mappings for global deployment • 
+                <strong>Integration:</strong> Implementation in existing password managers and security systems
+            </p>
+            <br>
+            <p style="font-weight: 600;">
+                This work addresses a critical gap in digital security research by making complex codes both secure and memorable through innovative AI-driven visual mnemonics.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
